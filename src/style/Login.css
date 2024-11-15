@@ -1,0 +1,107 @@
+.login {
+    /* width: 100vw; */
+    height: 100vh;
+    overflow: hidden;
+}
+
+.login h1.welcome {
+    font-family: "Oleo Script", system-ui;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 7em;
+    float: left;
+}
+
+.container-login {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.container-login img{
+    position: absolute;
+    z-index: -1;
+    overflow: hidden;
+    bottom: 0;
+    opacity: 0.5;
+}
+
+.container-login h1.welcome {
+    margin: 0 !important;
+    color: #E76F51;
+}
+
+.container-login h1.title {
+    font-family: "Monoton", sans-serif;
+    font-weight: 400;
+    font-size: 2.5em;
+    font-style: normal;
+    color: #2A9D8F;
+    background-color: rgb(254, 250, 224, 0.7);
+    padding: 0 60px;
+    border-radius: 40px;
+}
+
+.container-login h1.title-login {
+    font-family: "Pixelify Sans", sans-serif;
+    font-weight: 1000;
+    font-style: normal;
+    font-size: 5em;
+    color: #2A9D8F;
+    margin-bottom: 80px;
+}
+
+.wrapper-form {
+    width: 40%;
+}
+
+.wrapper-form .group-input {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 5px;
+}
+
+.wrapper-form .group-input input {
+    font-family: "Oregano", cursive;
+    font-weight: 400;
+    font-style: normal;
+    padding: 20px;
+    font-size: 2em;
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5);
+    background-color: rgba(42, 157, 143, 0.5);
+}
+
+.wrapper-form .group-input label {
+    font-family: "Oleo Script Swash Caps", system-ui;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 3em;
+}
+
+.wrapper-form .submit {
+    font-family: "Zen Dots", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.5em;
+    margin-top: 60px;
+    background: #264653;
+    border: none;
+    color: #fefae0;
+    height: 60px;
+    width: 100%;
+    transition: box-shadow 0.1s ease;
+}
+
+.wrapper-form .submit:hover {
+    background: #E76F51;
+    color: #264653;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.wrapper-form .submit:active{
+    background: #ff006e;
+    color: #fefae0;
+}
