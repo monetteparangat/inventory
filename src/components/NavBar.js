@@ -3,12 +3,12 @@ import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 function NavBar() {
     return (
         <div className="container-navbar">
-            <Navbar expand="lg" className="bg-body-tertiary">
+            <Navbar expand="lg" className="navbar">
                 <Container>
-                    <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+                    <Navbar.Brand href="#home">Inventory System</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
+                        <Nav className="nav-links ms-auto">
                             <Nav.Link href="#home">Home</Nav.Link>
                             <Nav.Link href="#link">Link</Nav.Link>
                             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
