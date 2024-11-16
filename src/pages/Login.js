@@ -1,8 +1,15 @@
 import '../style/Login.css'
 import { useForm } from "react-hook-form"
 import streetImg from '../assets/img/street.svg'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/home')
+    };
+
     const {
         register,
         handleSubmit,
@@ -31,7 +38,7 @@ function Login() {
                             <label>Password</label>
                             <input type='password'{...register("exampleRequired")} />
                         </div>
-                        <button type="submit" className='submit'>LOGIN</button>
+                        <button onClick={handleClick} type="submit" className='submit'>LOGIN</button>
                     </form>
                 </div>
                 <img src={streetImg} alt='street'/>
