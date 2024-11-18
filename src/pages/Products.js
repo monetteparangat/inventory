@@ -5,7 +5,7 @@ import '../style/Products.css'
 import { FaPlus, FaTrash } from 'react-icons/fa6';
 import { FaEdit } from 'react-icons/fa';
 
-function Products() {
+function Products({ handlePage }) {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -22,6 +22,10 @@ function Products() {
         return response
     }
 
+    const handleAdd = () => {
+        handlePage('Add-Product')
+    }
+
     useEffect(() => {
         productLoad();
     }, []);
@@ -29,7 +33,7 @@ function Products() {
     return (
         <div className="container-products">
             <div className='wrapper-actions'>
-                <div className='icon-actions'>
+                <div className='icon-actions' onClick={handleAdd}>
                     <FaPlus />
                     <label className='label-add'>ADD</label>
                 </div>
