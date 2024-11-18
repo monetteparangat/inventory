@@ -1,0 +1,37 @@
+.container-product-table {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.container-product-table div {
+    background-color: transparent !important;
+}
+
+.container-product-table .rdt_TableHead {
+    background-color: #264653 !important;
+    border-radius: 5px !important;
+    color: #f9c74f;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.container-product-table .rdt_TableRow:nth-child(even) {
+    background-color: #ece6bf !important;
+}
+
+.container-product-table .rdt_TableRow:nth-child(odd) {
+    box-shadow: inset 1px 1px 8px rgba(0, 0, 0, 0.2);
+
+}
+
+.container-product-table .rdt_Pagination {
+    background-color: #619b8a;
+    box-shadow: inset 5px 5px 30px rgba(0, 0, 0, 0.4);
+    color: #fefae0;
+}
+
+.container-product-table svg {
+    background-color: #fefae0;
+}
+
+.container-product-table path {
+    color: #233d4d;
+}

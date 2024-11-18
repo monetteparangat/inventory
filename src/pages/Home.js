@@ -9,7 +9,6 @@ function Home() {
     const [page, setPage] = useState('Products');
 
     const handlePage = (data) => {
-        console.log(data)
         setPage(data);
     }
 

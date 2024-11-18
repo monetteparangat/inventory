@@ -4,10 +4,13 @@ import Table from 'react-bootstrap/Table';
 import '../style/Products.css'
 import { FaPlus, FaTrash } from 'react-icons/fa6';
 import { FaEdit } from 'react-icons/fa';
+import DataTable from 'react-data-table-component';
+import ProductTable from '../components/ProductTable';
 
 function Products({ handlePage }) {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+
 
     const productLoad = async () => {
         const response = await axios.get('/data.json')
@@ -47,14 +50,13 @@ function Products({ handlePage }) {
                 </div>
             </div>
             <div className="wrapper-table">
-                <Table striped hover className="table-products">
+                {/* <Table striped hover className="table-products">
                     <thead className='thead-products'>
                         <tr>
                             <th></th>
-                            <th>#</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Username</th>
+                            {tableHeader.map((header, i) => (
+                                <th>{header}</th>
+                            ))}
                         </tr>
                     </thead>
                     <tbody className='tbody-products'>
@@ -69,16 +71,28 @@ function Products({ handlePage }) {
                                         <input
                                             type='checkbox' />
                                     </td>
-                                    <td>{product.id}</td>
-                                    <td>{product.name}</td>
-                                    <td>{product.description}</td>
-                                    <td>{product.price}</td>
+                                    <td>{product.ProductID}</td>
+                                    <td>{product.ProductName}</td>
+                                    <td>{product.Category}</td>
+                                    <td>{product.Price}</td>
+                                    <td>{product.StockQuantity}</td>
+                                    <td>{product.StockStatus}</td>
+                                    <td>{product.Description}</td>
+                                    <td>{product.DateAdded}</td>
+                                    <td>{product.LastUpdated}</td>
+                                    <td>{product.Supplier}</td>
+                                    <td>{product.Discount}</td>
+                                    <td>{product.CostPrice}</td>
+                                    <td>{product.SalesPrice}</td>
+                                    <td>{product.ProductStatus}</td>
                                 </tr>
                             ))
                         )}
 
                     </tbody>
-                </Table>
+                </Table> */}
+
+                <ProductTable products={products} />
             </div>
         </div>
     );

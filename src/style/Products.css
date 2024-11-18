@@ -2,6 +2,7 @@
     font-family: "Roboto", sans-serif;
     font-weight: 300;
     font-style: normal;
+    margin-right: 20px;
 }
 
 table {
@@ -10,7 +11,7 @@ table {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
-thead.thead-products {
+/* thead.thead-products {
     background-color: #264653;
     border-radius: 10px !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -29,7 +30,7 @@ thead.thead-products th {
 
 .tbody-products tr {
     background-color: #edede9;
-}
+} */
 
 .wrapper-actions {
     display: flex;
