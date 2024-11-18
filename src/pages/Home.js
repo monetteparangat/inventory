@@ -6,21 +6,22 @@ import { useState } from "react";
 import ProductForm from "./ProductForm";
 
 function Home() {
-    const [page, setPage] = useState('Product');
+    const [page, setPage] = useState('Products');
 
     const handlePage = (data) => {
+        console.log(data)
         setPage(data);
     }
 
     return (
         <div className="container-home">
             <NavBar />
-            <SideBar />
+            <SideBar handlePage={handlePage} />
             <div className="content">
-                {page === 'Product' &&
+                {page.toLowerCase() === 'products' &&
                     <Products handlePage={handlePage} />
                 }
-                {page === 'Add-Product' &&
+                {page.toLowerCase() === 'add-product' &&
                     <ProductForm handlePage={handlePage} />
                 }
             </div>

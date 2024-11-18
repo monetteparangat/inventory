@@ -18,7 +18,7 @@ function ProductForm({handlePage}) {
     const handleSelectedCategory = () => { }
     const handleSelectedStatus = () => { }
     const handleCancel = () => {
-        handlePage('Product')
+        handlePage('Products')
     }
 
     console.log(watch("example"))
