@@ -37,16 +37,16 @@ thead.thead-products th {
     justify-content: center;
 }
 
-.wrapper-actions> :first-child {
+.wrapper-actions .icon-actions.add {
     background-color: #faa307;
 }
 
-.wrapper-actions> :nth-child(2) {
+.wrapper-actions .icon-actions.delete {
     background-color: #9d0208;
     color: #fefae0 !important;
 }
 
-.wrapper-actions> :last-child {
+.wrapper-actions .icon-actions.edit {
     background-color: #5a189a;
     color: #fefae0 !important;
 }

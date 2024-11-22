@@ -1,89 +1,108 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import '../style/ProductTable.css'
 
-const ProductTable = ({ products }) => {
+const ProductTable = ({ products, handleSelected, tableKey }) => {
     const columns = [
         {
             name: 'Product ID',
-            selector: row => row.ProductID,
+            selector: row => row.id,
             sortable: true,
         },
         {
             name: 'Product Name',
-            selector: row => row.ProductName,
-            sortable: true,
-        },
-        {
-            name: 'Category',
-            selector: row => row.Category,
-            sortable: true,
-        },
-        {
-            name: 'Price',
-            selector: row => row.Price,
-            sortable: true,
-        },
-        {
-            name: 'Stock Quantity',
-            selector: row => row.StockQuantity,
-            sortable: true,
-        },
-        {
-            name: 'Stock Status',
-            selector: row => row.StockStatus,
+            selector: row => row.name,
             sortable: true,
         },
         {
             name: 'Description',
-            selector: row => row.Description,
+            selector: row => row.description,
+        },
+        {
+            name: 'Category',
+            selector: row => row.category,
+            sortable: true,
+        },
+        {
+            name: 'SKU',
+            selector: row => row.sku,
+            sortable: true,
+        },
+        {
+            name: 'Brand',
+            selector: row => row.brand,
+            sortable: true,
+        },
+        {
+            name: 'Quantity',
+            selector: row => row.quantity,
+            sortable: true,
+        },
+        {
+            name: 'Unit Price',
+            selector: row => row.unitPrice,
+            sortable: true,
+        },
+        {
+            name: 'Selling Price',
+            selector: row => row.sellingPrice,
+            sortable: true,
+        },
+        {
+            name: 'Reorder LEvel',
+            selector: row => row.reorderLevel,
+        },
+        {
+            name: 'Supplier ID',
+            selector: row => row.supplierId,
+        },
+        {
+            name: 'Location',
+            selector: row => row.location,
+        },
+        {
+            name: 'Barcode',
+            selector: row => row.barcode,
         },
         {
             name: 'Date Added',
-            selector: row => row.DateAdded,
-            sortable: true,
+            selector: row => row.dateAdded,
         },
         {
             name: 'Last Updated',
-            selector: row => row.LastUpdated,
-            sortable: true,
-        },
-        {
-            name: 'Supplier',
-            selector: row => row.Supplier,
-        },
-        {
-            name: 'Discount',
-            selector: row => row.Discount,
-        },
-        {
-            name: 'Cost Price',
-            selector: row => row.CostPrice,
-        },
-        {
-            name: 'Sales Price',
-            selector: row => row.SalesPrice,
-        },
-        {
-            name: 'Product Status',
-            selector: row => row.ProductStatus,
+            selector: row => row.lastUpdated,
         },
     ];
+
+    const clearSelected = () => {
+        console.log("Clearing selection");
+
+    }
+
+    const handleRowSelected = (data) => {
+        const rowsData = data.selectedRows;
+        console.log("Selected rows: ", rowsData);
+        handleSelected(rowsData);
+    }
+
 
     return (
         <div className='container-product-table'>
             <DataTable
+                key={tableKey}
                 columns={columns}
                 data={products}
                 pagination
-                paginationPerPage={5}
+                paginationPerPage={10}
                 paginationRowsPerPageOptions={[5, 10, 15, 20]}
                 highlightOnHover
                 striped
                 responsive
                 selectableRows
                 selectableRowsHighlight
+                onSelectedRowsChange={handleRowSelected}
             />
+            <button onClick={clearSelected}>test</button>
         </div>
     );
 };

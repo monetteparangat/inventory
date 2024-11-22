@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import '../style/ProductForm.css';
 import { useForm } from "react-hook-form"
+import axios from 'axios';
 
-function ProductForm({handlePage}) {
+function ProductForm({ handlePage, productInfo }) {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
 
@@ -11,63 +12,125 @@ function ProductForm({handlePage}) {
         handleSubmit,
         watch,
         formState: { errors },
-    } = useForm()
+    } = useForm({
+        defaultValues: productInfo[0]
+    })
 
-    const onSubmit = (data) => console.log(data)
+    const onSubmit = (data) => {
+        console.log('SUBMIT YEY', data);
+        axios
+            .post("http://localhost:8080/api/products", data)
+            .then(response => {
+                console.log("Product added successfully ", response);
+            })
+            .catch(error => {
+                console.error("Error adding product: ", error);
+            });
+    }
 
-    const handleSelectedCategory = () => { }
-    const handleSelectedStatus = () => { }
+    const handleSelectedCategory = (event) => {
+        const { value } = event.target
+        setSelectedCategory(value)
+    }
+
     const handleCancel = () => {
         handlePage('Products')
     }
 
     console.log(watch("example"))
 
+    useState(() => {
+        console.log('is there data dear', productInfo.length)
+    }, [])
+
     return (
         <div className='container-product-form'>
             <div className='wrapper-product-form'>
+                <h1>Product Information</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className='form-inputs'>
-                        <div className='form-group'>
-                            <label>Product Name</label>
-                            <input />
+                    <div className='wrapper-form-inputs'>
+                        <div className='form-inputs'>
+                            {productInfo.length != 0 &&
+                                <div className='form-group'>
+                                    <label>Product ID</label>
+                                    <input id="id" {...register('id')} disabled />
+                                </div>
+                            }
+                            <div className='form-group'>
+                                <label>Product Name</label>
+                                <input id="name" {...register('name', { required: true })} />
+                            </div>
+                            <div className='form-group'>
+                                <label>Description</label>
+                                <textarea id="description" {...register('description', { required: true })} />
+                            </div>
+                            <div className='form-group'>
+                                <label>Product Category</label>
+                                <select
+                                    id="category"
+                                    onChange={handleSelectedCategory}
+                                    {...register('category', { required: true })}
+                                >
+                                    <option value="">Select...</option>
+                                    <option value="Apparel">Apparel</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Furniture">Furniture</option>
+                                </select>
+                            </div>
+                            <div className='form-group'>
+                                <label>SKU</label>
+                                <input id="sku" {...register('sku', { required: true })} />
+                            </div>
+                            <div className='form-group'>
+                                <label>Brand</label>
+                                <input id="brand" {...register('brand', { required: true })} />
+                            </div>
+                            <div className='form-group'>
+                                <label>Quantity</label>
+                                <input type='number' id="quantity" {...register('quantity', { required: true })} />
+                            </div>
+                            <div className='form-group'>
+                                <label>Unit Price</label>
+                                <input type='number' id="unitPrice" {...register('unitPrice', { required: true })} />
+                            </div>
                         </div>
-                        <div className='form-group'>
-                            <label>Product Category</label>
-                            <select value={selectedCategory} onChange={handleSelectedCategory}>
-                                <option value="">Select...</option>
-                                <option value="option1">Option 1</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
-                            </select>
-                        </div>
-                        <div className='form-group'>
-                            <label>SKU</label>
-                            <input />
-                        </div>
-                        <div className='form-group'>
-                            <label>price</label>
-                            <input type='number' />
-                        </div>
-                        <div className='form-group'>
-                            <label>Quantity in Stock</label>
-                            <input type='number' />
-                        </div>
-                        <div className='form-group'>
-                            <label>Supplier</label>
-                            <input type='number' />
-                        </div>
-                        <div className='form-group'>
+                        <div className='form-inputs'>
+                            <div className='form-group'>
+                                <label>Selling Price</label>
+                                <input type='number' id="sellingPrice" {...register('sellingPrice', { required: true })} />
+                            </div>
+                            <div className='form-group'>
+                                <label>Reorder Level</label>
+                                <input type='number' id="reorderLevel" {...register('reorderLevel', { required: true })} />
+                            </div>
+                            <div className='form-group'>
+                                <label>Supplier ID</label>
+                                <input type='number' id="supplierId" {...register('supplierId', { required: true })} />
+                            </div>
+                            {/* <div className='form-group'>
                             <label>Product Image</label>
-                            <input type='file' accept='image/*' />
-                        </div>
-                        <div className='form-group'>
-                            <label>Product Status</label>
-                            <select value={selectedStatus} onChange={handleSelectedStatus}>
-                                <option value="">Select...</option>
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
+                            <input type='file' accept='image/*' id="Price" {...register('Price')} />
+                        </div> */}
+                            <div className='form-group'>
+                                <label>barcode</label>
+                                <input id="barcode" {...register('barcode', { required: true })} />
+                            </div>
+                            <div className='form-group'>
+                                <label>Location</label>
+                                <input id="location" {...register('location', { required: true })} />
+                            </div>
+                            {productInfo.length != 0 &&
+                                <div className='form-group'>
+                                    <label>Date Added</label>
+                                    <input id="dateAdded" type="datetime" {...register('dateAdded')} disabled />
+                                </div>
+                            }
+                            {productInfo.length != 0 &&
+                                <div className='form-group'>
+                                    <label>Last Updated</label>
+                                    <input id="lastUpdated" type="datetime" {...register('lastUpdated')} disabled />
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className='form-button'>

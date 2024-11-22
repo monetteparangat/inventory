@@ -7,9 +7,11 @@ import ProductForm from "./ProductForm";
 
 function Home() {
     const [page, setPage] = useState('Products');
+    const [data, setData] = useState([])
 
-    const handlePage = (data) => {
-        setPage(data);
+    const handlePage = (navToPage, data) => {
+        setPage(navToPage);
+        setData(data);
     }
 
     return (
@@ -20,8 +22,8 @@ function Home() {
                 {page.toLowerCase() === 'products' &&
                     <Products handlePage={handlePage} />
                 }
-                {page.toLowerCase() === 'add-product' &&
-                    <ProductForm handlePage={handlePage} />
+                {(page.toLowerCase() === 'add-product' || page.toLowerCase() === 'edit-product') &&
+                    <ProductForm handlePage={handlePage} productInfo={data} />
                 }
             </div>
         </div>
