@@ -102,7 +102,6 @@ const ProductTable = ({ products, handleSelected, tableKey }) => {
                 selectableRowsHighlight
                 onSelectedRowsChange={handleRowSelected}
             />
-            <button onClick={clearSelected}>test</button>
         </div>
     );
 };
