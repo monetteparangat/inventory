@@ -32,16 +32,16 @@ function SideBar({ handlePage }) {
                 { label: 'Sales Orders', key: 'salesOrders' }
             ]
         },
-        {
-            label: 'Reports',
-            key: 'reports',
-            items: [
-                { label: 'Inventory Report', key: 'inventoryReport' },
-                { label: 'Sales Report', key: 'salesReport' },
-                { label: 'Purchase Report', key: 'purchaseReport' },
-                { label: 'Low Stock Alerts', key: 'lowStockAlerts' }
-            ]
-        },
+        // {
+        //     label: 'Reports',
+        //     key: 'reports',
+        //     items: [
+        //         { label: 'Inventory Report', key: 'inventoryReport' },
+        //         { label: 'Sales Report', key: 'salesReport' },
+        //         { label: 'Purchase Report', key: 'purchaseReport' },
+        //         { label: 'Low Stock Alerts', key: 'lowStockAlerts' }
+        //     ]
+        // },
         {
             label: 'Orders & Fulfillment',
             key: 'orders',
@@ -78,10 +78,10 @@ function SideBar({ handlePage }) {
                 { label: 'Documentation', key: 'documentation' }
             ]
         },
-        {
-            label: 'Help & Support',
-            key: 'help2',
-        }
+        // {
+        //     label: 'Help & Support',
+        //     key: 'help2',
+        // }
     ];
 
     return (

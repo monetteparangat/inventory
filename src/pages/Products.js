@@ -75,6 +75,7 @@ function Products({ handlePage }) {
 
     return (
         <div className="container-products">
+            <h1>Products</h1>
             <div className='wrapper-actions'>
                 {selectedRows.length == 0 ?
                     <div className='icon-actions add' onClick={handleAdd}>

@@ -6,9 +6,11 @@ import { useState } from "react";
 import ProductForm from "./ProductForm";
 import Category from "./Category";
 import CategoryForm from "../components/CategoryForm";
+import Supplier from "./Supplier";
+import SupplierForm from "./SupplierForm";
 
 function Home() {
-    const [page, setPage] = useState('categories');
+    const [page, setPage] = useState('suppliers');
     const [data, setData] = useState([])
 
     const handlePage = (navToPage, data) => {
@@ -31,9 +33,14 @@ function Home() {
                     <Category handlePage={handlePage} />
                 }
                 {(page.toLowerCase() === 'add-category' || page.toLowerCase() === 'edit-category') &&
-                    <CategoryForm handlePage={handlePage} categoryInfo={data}/>
+                    <CategoryForm handlePage={handlePage} categoryInfo={data} />
                 }
-
+                {page.toLowerCase() === 'suppliers' &&
+                    <Supplier handlePage={handlePage} />
+                }
+                {(page.toLowerCase() === 'add-supplier' || page.toLowerCase() === 'edit-supplier') &&
+                    <SupplierForm handlePage={handlePage} supplierInfo={data}/>
+                }
             </div>
         </div>
     );

@@ -1,24 +1,20 @@
-import { useEffect, useState } from "react";
-import CategoryTable from "../components/CategoryTable";
-import axios from "axios";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import '../style/Products.css'
 import { FaPlus, FaTrash } from 'react-icons/fa6';
 import { FaEdit } from 'react-icons/fa';
+import SupplierTable from '../components/SupplierTable';
 
-function Category({handlePage}) {
-    const [categories, setCategories] = useState([]);
+function Supplier({ handlePage }) {
+    const [suppliers, setSuppliers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedRows, setSelectedRows] = useState([]);
     const [tableKey, setTableKey] = useState(0);
 
-    const handleRowsSelected = (data) => {
-        setSelectedRows(data)
-    }
-
-    const categoriesLoad = async () => {
-        const response = await axios.get('http://localhost:8080/api/product-categories')
+    const supplierLoad = async () => {
+        const response = await axios.get('http://localhost:8080/api/suppliers')
             .then(response => {
-                setCategories(response.data);
-                console.log("data categories are: ", response.data)
+                setSuppliers(response.data);
                 setLoading(false);
             }).catch(error => {
                 console.error("Error fetching data: ", error);
@@ -28,14 +24,18 @@ function Category({handlePage}) {
         return response
     }
 
+    const handleRowsSelected = (data) => {
+        setSelectedRows(data)
+    }
+
     const handleAdd = () => {
-        handlePage('Add-Category', selectedRows)
+        handlePage('Add-Supplier', selectedRows)
     }
 
     const handleEdit = () => {
         console.log(selectedRows.length === 1)
         if (selectedRows.length === 1) {
-            handlePage('Edit-category', selectedRows)
+            handlePage('Edit-Supplier', selectedRows)
         }
     }
 
@@ -44,12 +44,12 @@ function Category({handlePage}) {
 
         if (id != undefined) {
             axios
-                .delete(`http://localhost:8080/api/product-categories/${id}`)
+                .delete(`http://localhost:8080/api/suppliers/${id}`)
                 .then(() => {
-                    console.log("category deleted successfully")
+                    console.log("Product deleted successfully")
                     //update ui after deletion
-                    setCategories(prevCategories =>
-                        prevCategories.filter(category => category.id !== id)
+                    setSuppliers(prevSuppliers =>
+                        prevSuppliers.filter(supplier => supplier.id !== id)
                     );
 
                     setSelectedRows([])
@@ -58,19 +58,24 @@ function Category({handlePage}) {
                     console.log("selected rows", selectedRows);
                 })
                 .catch(error => {
-                    console.error("Error deleting category: ", error)
+                    console.error("Error deleting products: ", error)
                 })
 
         }
     }
 
     useEffect(() => {
-        categoriesLoad();
+        supplierLoad();
     }, []);
+
+    useEffect(() => {
+        console.log("selected rows", selectedRows);
+    }, [selectedRows])
+
 
     return (
         <div className="container-products">
-            <h1>Categories</h1>
+            <h1>Suppliers</h1>
             <div className='wrapper-actions'>
                 {selectedRows.length == 0 ?
                     <div className='icon-actions add' onClick={handleAdd}>
@@ -89,14 +94,14 @@ function Category({handlePage}) {
                 </div>
             </div>
             <div className="wrapper-table">
-                <CategoryTable
+                <SupplierTable
                     tableKey={tableKey}
-                    categories={categories}
+                    suppliers={suppliers}
                     handleSelected={handleRowsSelected}
                     selectedRows={selectedRows} />
             </div>
         </div>
-    )
+    );
 }
 
-export default Category;
+export default Supplier;
