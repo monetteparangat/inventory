@@ -1,20 +1,24 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import '../style/Products.css'
+import { useEffect, useState } from "react";
+import CategoryTable from "../components/CategoryTable";
+import axios from "axios";
 import { FaPlus, FaTrash } from 'react-icons/fa6';
 import { FaEdit } from 'react-icons/fa';
-import ProductTable from '../components/ProductTable';
 
-function Products({ handlePage }) {
-    const [products, setProducts] = useState([]);
+function Category({handlePage}) {
+    const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedRows, setSelectedRows] = useState([]);
     const [tableKey, setTableKey] = useState(0);
 
-    const productLoad = async () => {
-        const response = await axios.get('http://localhost:8080/api/products')
+    const handleRowsSelected = (data) => {
+        setSelectedRows(data)
+    }
+
+    const categoriesLoad = async () => {
+        const response = await axios.get('http://localhost:8080/api/product-categories')
             .then(response => {
-                setProducts(response.data);
+                setCategories(response.data);
+                console.log("data categories are: ", response.data)
                 setLoading(false);
             }).catch(error => {
                 console.error("Error fetching data: ", error);
@@ -24,32 +28,28 @@ function Products({ handlePage }) {
         return response
     }
 
-    const handleRowsSelected = (data) => {
-        setSelectedRows(data)
-    }
-
     const handleAdd = () => {
-        handlePage('Add-Product', selectedRows)
+        handlePage('Add-Category', selectedRows)
     }
 
     const handleEdit = () => {
         console.log(selectedRows.length === 1)
         if (selectedRows.length === 1) {
-            handlePage('Edit-product', selectedRows)
+            handlePage('Edit-category', selectedRows)
         }
     }
 
     const handleDelete = () => {
-        const productId = selectedRows[0]?.id;
+        const id = selectedRows[0]?.id;
 
-        if (productId != undefined) {
+        if (id != undefined) {
             axios
-                .delete(`http://localhost:8080/api/products/${productId}`)
+                .delete(`http://localhost:8080/api/product-categories/${id}`)
                 .then(() => {
-                    console.log("Product deleted successfully")
+                    console.log("category deleted successfully")
                     //update ui after deletion
-                    setProducts(prevProducts =>
-                        prevProducts.filter(product => product.id !== productId)
+                    setCategories(prevCategories =>
+                        prevCategories.filter(category => category.id !== id)
                     );
 
                     setSelectedRows([])
@@ -58,20 +58,15 @@ function Products({ handlePage }) {
                     console.log("selected rows", selectedRows);
                 })
                 .catch(error => {
-                    console.error("Error deleting products: ", error)
+                    console.error("Error deleting category: ", error)
                 })
 
         }
     }
 
     useEffect(() => {
-        productLoad();
+        categoriesLoad();
     }, []);
-
-    useEffect(() => {
-        console.log("selected rows", selectedRows);
-    }, [selectedRows])
-
 
     return (
         <div className="container-products">
@@ -93,14 +88,14 @@ function Products({ handlePage }) {
                 </div>
             </div>
             <div className="wrapper-table">
-                <ProductTable
+                <CategoryTable
                     tableKey={tableKey}
-                    products={products}
+                    categories={categories}
                     handleSelected={handleRowsSelected}
                     selectedRows={selectedRows} />
             </div>
         </div>
-    );
+    )
 }
 
-export default Products;
+export default Category;

@@ -74,11 +74,6 @@ const ProductTable = ({ products, handleSelected, tableKey }) => {
         },
     ];
 
-    const clearSelected = () => {
-        console.log("Clearing selection");
-
-    }
-
     const handleRowSelected = (data) => {
         const rowsData = data.selectedRows;
         console.log("Selected rows: ", rowsData);
