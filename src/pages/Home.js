@@ -8,9 +8,11 @@ import Category from "./Category";
 import CategoryForm from "../components/CategoryForm";
 import Supplier from "./Supplier";
 import SupplierForm from "./SupplierForm";
+import StockMovement from "./StockMovement";
+import StockMovementForm from "./StockMovementForm";
 
 function Home() {
-    const [page, setPage] = useState('suppliers');
+    const [page, setPage] = useState('stockMovement');
     const [data, setData] = useState([])
 
     const handlePage = (navToPage, data) => {
@@ -39,7 +41,13 @@ function Home() {
                     <Supplier handlePage={handlePage} />
                 }
                 {(page.toLowerCase() === 'add-supplier' || page.toLowerCase() === 'edit-supplier') &&
-                    <SupplierForm handlePage={handlePage} supplierInfo={data}/>
+                    <SupplierForm handlePage={handlePage} supplierInfo={data} />
+                }
+                {page.toLowerCase() === 'stockmovement' &&
+                    <StockMovement handlePage={handlePage} />
+                }
+                {(page.toLowerCase() === 'add-stock-movement' || page.toLowerCase() === 'edit-stock-movement') &&
+                    <StockMovementForm handlePage={handlePage} stockMovementInfo={data} />
                 }
             </div>
         </div>

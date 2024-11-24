@@ -3,7 +3,9 @@ import { useEffect, useState } from 'react';
 import '../style/Products.css'
 import { FaPlus, FaTrash } from 'react-icons/fa6';
 import { FaEdit } from 'react-icons/fa';
-import ProductTable from '../components/ProductTable';
+import { productColumns as columns } from '../config/columnsConfig';
+import Table from '../components/Table';
+
 
 function Products({ handlePage }) {
     const [products, setProducts] = useState([]);
@@ -94,9 +96,10 @@ function Products({ handlePage }) {
                 </div>
             </div>
             <div className="wrapper-table">
-                <ProductTable
+                <Table
+                    columns={columns}
                     tableKey={tableKey}
-                    products={products}
+                    data={products}
                     handleSelected={handleRowsSelected}
                     selectedRows={selectedRows} />
             </div>

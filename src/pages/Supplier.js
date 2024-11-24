@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import '../style/Products.css'
 import { FaPlus, FaTrash } from 'react-icons/fa6';
 import { FaEdit } from 'react-icons/fa';
-import SupplierTable from '../components/SupplierTable';
+import { supplierColumns as columns } from '../config/columnsConfig';
+import Table from '../components/Table';
 
 function Supplier({ handlePage }) {
     const [suppliers, setSuppliers] = useState([]);
@@ -94,9 +95,10 @@ function Supplier({ handlePage }) {
                 </div>
             </div>
             <div className="wrapper-table">
-                <SupplierTable
+                <Table
+                    columns={columns}
                     tableKey={tableKey}
-                    suppliers={suppliers}
+                    data={suppliers}
                     handleSelected={handleRowsSelected}
                     selectedRows={selectedRows} />
             </div>

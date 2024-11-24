@@ -1,25 +1,21 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import '../style/Products.css'
 import { FaPlus, FaTrash } from 'react-icons/fa6';
 import { FaEdit } from 'react-icons/fa';
-import { categoryColumns as columns } from "../config/columnsConfig";
-import Table from '../components/Table'
+import Table from '../components/Table';
+import { stockMovementColumns as columns } from '../config/columnsConfig';
 
-function Category({ handlePage }) {
-    const [categories, setCategories] = useState([]);
+function StockMovement({ handlePage }) {
+    const [stockMovements, setStockMovements] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedRows, setSelectedRows] = useState([]);
     const [tableKey, setTableKey] = useState(0);
 
-    const handleRowsSelected = (data) => {
-        setSelectedRows(data)
-    }
-
-    const categoriesLoad = async () => {
-        const response = await axios.get('http://localhost:8080/api/product-categories')
+    const dataLoad = async () => {
+        const response = await axios.get('http://localhost:8080/api/stock-movement')
             .then(response => {
-                setCategories(response.data);
-                console.log("data categories are: ", response.data)
+                setStockMovements(response.data);
                 setLoading(false);
             }).catch(error => {
                 console.error("Error fetching data: ", error);
@@ -29,14 +25,18 @@ function Category({ handlePage }) {
         return response
     }
 
+    const handleRowsSelected = (data) => {
+        setSelectedRows(data)
+    }
+
     const handleAdd = () => {
-        handlePage('Add-Category', selectedRows)
+        handlePage('Add-stock-movement', selectedRows)
     }
 
     const handleEdit = () => {
         console.log(selectedRows.length === 1)
         if (selectedRows.length === 1) {
-            handlePage('Edit-category', selectedRows)
+            handlePage('Edit-stock-movement', selectedRows)
         }
     }
 
@@ -45,12 +45,12 @@ function Category({ handlePage }) {
 
         if (id != undefined) {
             axios
-                .delete(`http://localhost:8080/api/product-categories/${id}`)
+                .delete(`http://localhost:8080/api/stock-movement/${id}`)
                 .then(() => {
-                    console.log("category deleted successfully")
+                    console.log("Product deleted successfully")
                     //update ui after deletion
-                    setCategories(prevCategories =>
-                        prevCategories.filter(category => category.id !== id)
+                    setStockMovements(prevStockMovements =>
+                        prevStockMovements.filter(stockMovement => stockMovement.id !== id)
                     );
 
                     setSelectedRows([])
@@ -59,19 +59,24 @@ function Category({ handlePage }) {
                     console.log("selected rows", selectedRows);
                 })
                 .catch(error => {
-                    console.error("Error deleting category: ", error)
+                    console.error("Error deleting products: ", error)
                 })
 
         }
     }
 
     useEffect(() => {
-        categoriesLoad();
+        dataLoad();
     }, []);
+
+    useEffect(() => {
+        console.log("selected rows", selectedRows);
+    }, [selectedRows])
+
 
     return (
         <div className="container-products">
-            <h1>Categories</h1>
+            <h1>Stock Movements</h1>
             <div className='wrapper-actions'>
                 {selectedRows.length == 0 ?
                     <div className='icon-actions add' onClick={handleAdd}>
@@ -93,12 +98,12 @@ function Category({ handlePage }) {
                 <Table
                     columns={columns}
                     tableKey={tableKey}
-                    data={categories}
+                    data={stockMovements}
                     handleSelected={handleRowsSelected}
                     selectedRows={selectedRows} />
             </div>
         </div>
-    )
+    );
 }
 
-export default Category;
+export default StockMovement;

@@ -26,10 +26,10 @@ function SideBar({ handlePage }) {
             items: [
                 { label: 'Products', key: 'products' },
                 { label: 'Categories', key: 'categories' },
-                { label: 'Stock Levels', key: 'stockLevels' },
+                { label: 'Stock Movements', key: 'stockMovement' },
                 { label: 'Suppliers', key: 'suppliers' },
-                { label: 'Purchase Orders', key: 'purchaseOrders' },
-                { label: 'Sales Orders', key: 'salesOrders' }
+                // { label: 'Purchase Orders', key: 'purchaseOrders' },
+                // { label: 'Sales Orders', key: 'salesOrders' }
             ]
         },
         // {
@@ -42,16 +42,16 @@ function SideBar({ handlePage }) {
         //         { label: 'Low Stock Alerts', key: 'lowStockAlerts' }
         //     ]
         // },
-        {
-            label: 'Orders & Fulfillment',
-            key: 'orders',
-            items: [
-                { label: 'All Orders', key: 'allOrders' },
-                { label: 'Pending Orders', key: 'pendingOrders' },
-                { label: 'Completed Orders', key: 'completedOrders' },
-                { label: 'Returns', key: 'returns' }
-            ]
-        },
+        // {
+        //     label: 'Orders & Fulfillment',
+        //     key: 'orders',
+        //     items: [
+        //         { label: 'All Orders', key: 'allOrders' },
+        //         { label: 'Pending Orders', key: 'pendingOrders' },
+        //         { label: 'Completed Orders', key: 'completedOrders' },
+        //         { label: 'Returns', key: 'returns' }
+        //     ]
+        // },
         {
             label: 'User Management',
             key: 'userManagement',
