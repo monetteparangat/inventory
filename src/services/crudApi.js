@@ -1,4 +1,5 @@
 import api from './api'
+import { BASE_URL } from '../config/endpoints'
 
 // General function to make requests
 const request = (method, url, data = null) => {
@@ -14,7 +15,7 @@ export const post = (url, data) => {
     return request('post', url, data)
 }
 
-export const put = (url) => {
+export const put = (url, data) => {
     return request('put', url, data)
 }
 

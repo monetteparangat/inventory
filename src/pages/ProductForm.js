@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import '../style/ProductForm.css';
 import { useForm } from "react-hook-form"
-import axios from 'axios';
+import { post, put } from '../services/crudApi';
+import { PRODUCT_API as ENDPOINT } from '../config/endpoints';
 
 function ProductForm({ handlePage, productInfo }) {
     const [selectedCategory, setSelectedCategory] = useState("");
-    const [selectedStatus, setSelectedStatus] = useState("");
+
 
     const {
         register,
@@ -16,16 +17,21 @@ function ProductForm({ handlePage, productInfo }) {
         defaultValues: productInfo[0]
     })
 
-    const onSubmit = (data) => {
-        console.log('SUBMIT YEY', data);
-        axios
-            .post("http://localhost:8080/api/products", data)
-            .then(response => {
+    const onSubmit = async (data) => {
+
+        const id = data?.id;
+        let response;
+        try {
+            if (id === undefined) {
+                response = await post(ENDPOINT, data);
                 console.log("Product added successfully ", response);
-            })
-            .catch(error => {
-                console.error("Error adding product: ", error);
-            });
+            } else {
+                response = await put(`${ENDPOINT}/${id}`, data);
+                console.log("Product updated successfully", response);
+            }
+        } catch (error) {
+            console.error("Error adding product: ", error);
+        }
     }
 
     const handleSelectedCategory = (event) => {
@@ -107,10 +113,6 @@ function ProductForm({ handlePage, productInfo }) {
                                 <label>Supplier ID</label>
                                 <input type='number' id="supplierId" {...register('supplierId', { required: true })} />
                             </div>
-                            {/* <div className='form-group'>
-                            <label>Product Image</label>
-                            <input type='file' accept='image/*' id="Price" {...register('Price')} />
-                        </div> */}
                             <div className='form-group'>
                                 <label>barcode</label>
                                 <input id="barcode" {...register('barcode', { required: true })} />

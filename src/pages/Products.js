@@ -5,6 +5,8 @@ import { FaPlus, FaTrash } from 'react-icons/fa6';
 import { FaEdit } from 'react-icons/fa';
 import { productColumns as columns } from '../config/columnsConfig';
 import Table from '../components/Table';
+import { PRODUCT_API } from '../config/endpoints';
+import { get, deleteRequest } from '../services/crudApi';
 
 
 function Products({ handlePage }) {
@@ -12,19 +14,6 @@ function Products({ handlePage }) {
     const [loading, setLoading] = useState(true);
     const [selectedRows, setSelectedRows] = useState([]);
     const [tableKey, setTableKey] = useState(0);
-
-    const productLoad = async () => {
-        const response = await axios.get('http://localhost:8080/api/products')
-            .then(response => {
-                setProducts(response.data);
-                setLoading(false);
-            }).catch(error => {
-                console.error("Error fetching data: ", error);
-                setLoading(false);
-            });
-
-        return response
-    }
 
     const handleRowsSelected = (data) => {
         setSelectedRows(data)
@@ -41,28 +30,41 @@ function Products({ handlePage }) {
         }
     }
 
-    const handleDelete = () => {
-        const productId = selectedRows[0]?.id;
+    const productLoad = async () => {
+        let response;
+        try {
+            response = await get(PRODUCT_API);
+            setProducts(response.data);
+        } catch (error) {
+            console.error("Error fetching data: ", error);
+        } finally {
+            setLoading(false);
+        }
 
-        if (productId != undefined) {
-            axios
-                .delete(`http://localhost:8080/api/products/${productId}`)
-                .then(() => {
-                    console.log("Product deleted successfully")
-                    //update ui after deletion
-                    setProducts(prevProducts =>
-                        prevProducts.filter(product => product.id !== productId)
-                    );
+        return response
+    }
 
-                    setSelectedRows([])
-                    setTableKey(prevKey => prevKey + 1);
+    const handleDelete = async () => {
+        const id = selectedRows[0]?.id;
+        if (id != undefined) {
+            try {
+                setLoading(true);
+                await deleteRequest(`${PRODUCT_API}/${id}`)
+                console.log("Product deleted successfully")
+                
+                //update ui after deletion
+                setProducts(prevProducts =>
+                    prevProducts.filter(product => product.id !== id)
+                );
 
-                    console.log("selected rows", selectedRows);
-                })
-                .catch(error => {
-                    console.error("Error deleting products: ", error)
-                })
-
+                setSelectedRows([])
+                setTableKey(prevKey => prevKey + 1);
+            } catch (error) {
+                console.error("Error deleting products: ", error)
+            }
+            finally {
+                setLoading(false);
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-const BASE_URL = process.env.REACT_APP_API_BASE_URL; c
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const PRODUCT_API = process.env.REACT_APP_PRODUCT_API;
 const ORDER_API = process.env.REACT_APP_ORDER_API;
 const CUSTOMER_API = process.env.REACT_APP_CUSTOMER_API;
