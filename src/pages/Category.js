@@ -3,7 +3,10 @@ import axios from "axios";
 import { FaPlus, FaTrash } from 'react-icons/fa6';
 import { FaEdit } from 'react-icons/fa';
 import { categoryColumns as columns } from "../config/columnsConfig";
-import Table from '../components/Table'
+import Table from '../components/Table';
+import { CATEGORY_API } from '../config/endpoints';
+import { deleteRequest, get } from "../services/crudApi";
+
 
 function Category({ handlePage }) {
     const [categories, setCategories] = useState([]);
@@ -16,15 +19,16 @@ function Category({ handlePage }) {
     }
 
     const categoriesLoad = async () => {
-        const response = await axios.get('http://localhost:8080/api/product-categories')
-            .then(response => {
-                setCategories(response.data);
-                console.log("data categories are: ", response.data)
-                setLoading(false);
-            }).catch(error => {
-                console.error("Error fetching data: ", error);
-                setLoading(false);
-            });
+        let response;
+
+        try {
+            response = await get(CATEGORY_API);
+            setCategories(response?.data);
+        } catch (error) {
+            console.error("Error fetching data: ", error);
+        } finally {
+            setLoading(false);
+        }
 
         return response
     }
@@ -40,28 +44,27 @@ function Category({ handlePage }) {
         }
     }
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         const id = selectedRows[0]?.id;
 
-        if (id != undefined) {
-            axios
-                .delete(`http://localhost:8080/api/product-categories/${id}`)
-                .then(() => {
-                    console.log("category deleted successfully")
-                    //update ui after deletion
-                    setCategories(prevCategories =>
-                        prevCategories.filter(category => category.id !== id)
-                    );
+        if (id !== undefined) {
+            try {
+                setLoading(true);
+                await deleteRequest(`${CATEGORY_API}/${id}`)
+                console.log("Product deleted successfully")
 
-                    setSelectedRows([])
-                    setTableKey(prevKey => prevKey + 1);
+                //update ui after deletion
+                setCategories(prevCategories =>
+                    prevCategories.filter(category => category.id !== id)
+                );
 
-                    console.log("selected rows", selectedRows);
-                })
-                .catch(error => {
-                    console.error("Error deleting category: ", error)
-                })
-
+                setSelectedRows([])
+                setTableKey(prevKey => prevKey + 1);
+            } catch (error) {
+                console.error("Error deleting category: ", error)
+            } finally {
+                setLoading(false);
+            }
         }
     }
 

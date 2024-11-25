@@ -5,11 +5,11 @@ import '../style/Home.css'
 import { useState } from "react";
 import ProductForm from "./ProductForm";
 import Category from "./Category";
-import CategoryForm from "../components/CategoryForm";
 import Supplier from "./Supplier";
 import SupplierForm from "./SupplierForm";
 import StockMovement from "./StockMovement";
 import StockMovementForm from "./StockMovementForm";
+import CategoryForm from "./CategoryForm";
 
 function Home() {
     const [page, setPage] = useState('stockMovement');
