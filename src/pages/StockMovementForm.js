@@ -3,11 +3,10 @@ import '../style/ProductForm.css';
 import { useForm } from "react-hook-form"
 import axios from 'axios';
 import StockMovement from './StockMovement';
+import { post, put } from '../services/crudApi';
+import { STOCK_MOVEMENT_API as ENDPOINT } from '../config/endpoints';
 
 function StockMovementForm({ handlePage, stockMovementInfo }) {
-    const [selectedCategory, setSelectedCategory] = useState("");
-    const [selectedStatus, setSelectedStatus] = useState("");
-
     const {
         register,
         handleSubmit,
@@ -17,21 +16,20 @@ function StockMovementForm({ handlePage, stockMovementInfo }) {
         defaultValues: stockMovementInfo[0]
     })
 
-    const onSubmit = (data) => {
-        console.log('SUBMIT YEY', data);
-        axios
-            .post("http://localhost:8080/api/stock-movement", data)
-            .then(response => {
-                console.log("Product added successfully ", response);
-            })
-            .catch(error => {
-                console.error("Error adding product: ", error);
-            });
-    }
-
-    const handleSelectedCategory = (event) => {
-        const { value } = event.target
-        setSelectedCategory(value)
+    const onSubmit = async (data) => {
+        const id = data?.id;
+        let response;
+        try {
+            if (id === undefined) {
+                response = await post(ENDPOINT, data);
+                console.log("STOCK MOVEMENT added successfully ", response);
+            } else {
+                response = await put(`${ENDPOINT}/${id}`, data);
+                console.log("STOCK MOVEMENT  updated successfully", response);
+            }
+        } catch (error) {
+            console.error("Error adding product: ", error);
+        }
     }
 
     const handleCancel = () => {

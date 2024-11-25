@@ -5,6 +5,8 @@ import { FaPlus, FaTrash } from 'react-icons/fa6';
 import { FaEdit } from 'react-icons/fa';
 import Table from '../components/Table';
 import { stockMovementColumns as columns } from '../config/columnsConfig';
+import { deleteRequest, get } from '../services/crudApi';
+import { STOCK_MOVEMENT_API } from '../config/endpoints';
 
 function StockMovement({ handlePage }) {
     const [stockMovements, setStockMovements] = useState([]);
@@ -13,14 +15,15 @@ function StockMovement({ handlePage }) {
     const [tableKey, setTableKey] = useState(0);
 
     const dataLoad = async () => {
-        const response = await axios.get('http://localhost:8080/api/stock-movement')
-            .then(response => {
-                setStockMovements(response.data);
-                setLoading(false);
-            }).catch(error => {
-                console.error("Error fetching data: ", error);
-                setLoading(false);
-            });
+        let response;
+        try {
+            response = await get(STOCK_MOVEMENT_API);
+            setStockMovements(response.data);
+        } catch (error) {
+            console.error("Error fetching data: ", error);
+        } finally {
+            setLoading(false);
+        }
 
         return response
     }
@@ -40,32 +43,34 @@ function StockMovement({ handlePage }) {
         }
     }
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         const id = selectedRows[0]?.id;
 
         if (id != undefined) {
-            axios
-                .delete(`http://localhost:8080/api/stock-movement/${id}`)
-                .then(() => {
-                    console.log("Product deleted successfully")
-                    //update ui after deletion
-                    setStockMovements(prevStockMovements =>
-                        prevStockMovements.filter(stockMovement => stockMovement.id !== id)
-                    );
+            try {
+                setLoading(true);
+                await deleteRequest(`${STOCK_MOVEMENT_API}/${id}`)
+                console.log("Stock Movement deleted successfully")
 
-                    setSelectedRows([])
-                    setTableKey(prevKey => prevKey + 1);
+                //update ui after deletion
+                setStockMovements(prevStockMovements =>
+                    prevStockMovements.filter(stockMovement => stockMovement.id !== id)
+                );
 
-                    console.log("selected rows", selectedRows);
-                })
-                .catch(error => {
-                    console.error("Error deleting products: ", error)
-                })
+                setSelectedRows([])
+                setTableKey(prevKey => prevKey + 1);
+            } catch (error) {
+                console.error("Error deleting products: ", error)
+            }
+            finally {
+                setLoading(false);
+            }
 
         }
     }
 
     useEffect(() => {
+        console.log(STOCK_MOVEMENT_API)
         dataLoad();
     }, []);
 
